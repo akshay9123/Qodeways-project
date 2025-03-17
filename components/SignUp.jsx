@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import jwt from "jwt-simple"
+
 
 const SignUp = () => {
 
@@ -12,11 +12,11 @@ const SignUp = () => {
   const [file,setfile] = useState(null)
   const [otherDetails, setOtherDetails] = useState("")
   const [submitted, setSubmited] = useState(false)
-  const [token, setToken] = useState("")
 
 
 
-  const secretKey = "qodeways"
+
+  
   const handleSubmit = () => {
     if (!email) {
       alert("Please enter an email!");
@@ -25,8 +25,7 @@ const SignUp = () => {
 
     // Generate JWT token
     
-    const newToken = jwt.encode({ email, fname, lname, phone, otherDetails }, secretKey);
-    setToken(newToken);
+
     setSubmited(true);
   };
  
@@ -50,7 +49,7 @@ const SignUp = () => {
         <div>Phone : {phone}</div>
         <div>Password : {password}</div>
         <div>Other Details : {otherDetails}</div>
-        <div>Token : {token}</div>
+       
         
 
         </>
