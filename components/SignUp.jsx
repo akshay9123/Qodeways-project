@@ -6,6 +6,7 @@ const SignUp = () => {
 
   const [fname,setFname]= useState("")
   const [lname,setLname] = useState("")
+  const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [phone,setPhone]= useState("")
   const [file,setfile] = useState(null)
@@ -47,6 +48,7 @@ const SignUp = () => {
         <div>Last Name : {lname}</div>
         <div>Email : {email}</div>
         <div>Phone : {phone}</div>
+        <div>Password : {password}</div>
         <div>Other Details : {otherDetails}</div>
         <div>Token : {token}</div>
         
@@ -69,6 +71,11 @@ const SignUp = () => {
       {/* Phone */}
       <input type="tel" placeholder="Phone" required className="w-full border-2 border-black p-2 rounded-lg" 
         onChange={(e)=>setPhone(e.target.value)}
+      />
+
+      {/* Password */}
+      <input type="password" placeholder="Password" required className="w-full border-2 border-black p-2 rounded-lg" 
+        onChange={(e)=>setPassword(e.target.value)}
       />
 
       {/* Other Details */}
