@@ -20,12 +20,15 @@ export const POST = async(request) =>{
         }
 
 
-        // CREATING THE USER MODEL SCHEMA
-        const user = new UserSchema({firstName,lastName,email,phone,password,otherDetails})
-
-
-        // SAVING THE DATA INTO THE DATABASE
-        await user.save()
+        // Create and save the user
+        const user = await UserSchema.create({
+            firstName,
+            lastName,
+            email,
+            phone,
+            password,
+            otherDetails,
+        });
 
 
         // GENERATING THE TOKEN INSIDE THE USER DETAILS
