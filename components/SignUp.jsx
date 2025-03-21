@@ -16,6 +16,8 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleSubmit = async () => {
+
+    
     if (!email || !password) {
       alert("Please enter an email and password");
       return;

@@ -4,15 +4,14 @@ import { NextResponse as res } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
 
-// FUNCTION TO GENERATE THE ACCESS TOKEN
-const getToken = (payload) => {
-    return jwt.sign(payload, process.env.ACESS_TOKEN_SECRET, { expiresIn: '15m' });
-};
 
+
+
+// SIGNUP API 
 export const POST = async (request) => {
     try {
 
-
+        
         // EXTRACT THE CREDENTIALS GIVEN BY THE USER
         const { firstName, lastName, email, phone, password, otherDetails } = await request.json();
 
@@ -34,23 +33,9 @@ export const POST = async (request) => {
         });
 
 
-        // GENERATE THE JWT TOKEN
-        const accessToken = getToken({ id: user._id, firstName: user.firstName });
+        
 
-
-        // SET THE TOKEN INTO THE COOKIE
-        const cookie = serialize('token', accessToken, {
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'strict',
-            path: '/',
-            maxAge: 15 * 60, 
-        });
-
-        // RETURN THE SUCCESS MESSAGE
-        const response = res.json({ success: true });
-        response.headers.set('Set-Cookie', cookie);
-
+        // IF EVERYTHING IS FINE THEN RETURN THE RESPONSE
         return response;
 
     } catch (error) {
