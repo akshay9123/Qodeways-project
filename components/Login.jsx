@@ -1,26 +1,36 @@
 "use client";
 import React, { useState } from "react";
-import axios from "axios";
+import { signIn } from "next-auth/react"; // Import NextAuth signIn function
 import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+
     if (!email || !password) {
-      alert("Please enter an email and password");
+      setError("Please enter an email and password");
       return;
     }
 
     try {
-      await axios.post("/api/login", { email, password }, { headers: { "Content-Type": "application/json" } });
-      router.push("/admin"); // Redirect to dashboard after login
+      const res = await signIn("credentials", {
+        redirect: false, // Prevents NextAuth from automatically redirecting
+        email,
+        password,
+      });
+
+      if (res?.error) {
+        setError(res.error); // Display error if authentication fails
+      } else {
+        router.push("/admin"); // Redirect to dashboard on successful login
+      }
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed!");
+      setError("Login failed! Please try again.");
     }
   };
 
@@ -38,6 +48,7 @@ const Login = () => {
       <input 
         type="email" 
         placeholder="Email Address" 
+        name="email"
         required 
         className="w-full border-2 border-black p-2 rounded-lg" 
         onChange={(e) => setEmail(e.target.value)} 
@@ -47,6 +58,7 @@ const Login = () => {
       <input 
         type="password" 
         placeholder="Password" 
+        name="password"
         required 
         className="w-full border-2 border-black p-2 rounded-lg" 
         onChange={(e) => setPassword(e.target.value)} 

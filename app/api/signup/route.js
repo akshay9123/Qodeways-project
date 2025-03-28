@@ -1,9 +1,7 @@
 import '@/lib/db';
 import UserSchema from '@/schema/user.schema';
+import { redirect } from 'next/navigation';
 import { NextResponse as res } from 'next/server';
-import jwt from 'jsonwebtoken';
-import { serialize } from 'cookie';
-
 
 
 
@@ -34,10 +32,8 @@ export const POST = async (request) => {
 
 
         
-
-        // IF EVERYTHING IS FINE THEN RETURN THE RESPONSE
-        return response;
-
+        // IF EVERYTHING IS FINE THEN RETURN SUCCESS
+        return res.json({ success: true, message: 'User registered successfully', user }, { status: 201 });
     } catch (error) {
         return res.json({ success: false, message: error.message });
     }
