@@ -31,11 +31,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error("Password does not match");
         }
 
-        return user;
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
+        };
       },
     }),
   ],
   pages: {
     signIn: "/login",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async session({ session, token }) {
+      session.user.id = token.id;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
   },
 });
