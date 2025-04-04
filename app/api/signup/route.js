@@ -3,6 +3,11 @@ import UserSchema from "@/schema/user.schema";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 
+
+export const config = {
+  runtime: "nodejs", // Ensures Next.js uses Node.js runtime instead of Edge
+};
+
 // SIGNUP API
 export const POST = async (request) => {
   try {
